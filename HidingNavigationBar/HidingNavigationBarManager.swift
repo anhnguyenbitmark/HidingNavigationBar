@@ -298,7 +298,7 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
 			}
 			
 			// 3 - Update contracting variable
-			if Float(fabs(deltaY)) > .ulpOfOne {
+            if Float(abs(deltaY)) > .ulpOfOne {
 				if deltaY < 0 {
 					currentState = .Contracting
 				} else {
