@@ -80,7 +80,7 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
 	//Options
 	open var onForegroundAction = HidingNavigationForegroundAction.default
 	
-	public init(viewController: UIViewController, scrollView: UIScrollView){
+    public init(viewController: UIViewController, customNavView: UIView? = nil, scrollView: UIScrollView){
 		if viewController.navigationController == nil || viewController.navigationController?.navigationBar == nil {
 			fatalError("ViewController must be within a UINavigationController")
 		}
@@ -94,7 +94,12 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
 		extensionController = HidingViewController()
 		viewController.view.addSubview(extensionController.view)
 		
-		let navBar = viewController.navigationController!.navigationBar
+        let navBar: UIView
+        if let customNavView = customNavView {
+            navBar = customNavView
+        } else {
+            navBar = viewController.navigationController!.navigationBar
+        }
 		navBarController = HidingViewController(view: navBar)
 		navBarController.child = extensionController
 		navBarController.alphaFadeEnabled = true
